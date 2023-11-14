@@ -1,12 +1,11 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import { cookies } from 'next/headers'
  
-type ResponseData = {
-  message: string
-}
+export async function GET(request: Request) {
+  const cookieStore = cookies()
+  const token = cookieStore.get('token')
  
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
-) {
-  res.status(200).json({ message: 'Hello from Next.js!' })
+  return new Response('Hello, Next.js!', {
+    status: 200,
+    headers: { 'Set-Cookie': `token=${token?.value}` },
+  })
 }
