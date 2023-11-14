@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/0d7e036b-3d12-45c7-9e9e-f621887b1a80/resourceGroups/usg/providers/Microsoft.Web/sites/usg-initiative-tracker",
+    "appService.deploySubpath": "."
+}
