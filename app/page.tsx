@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client'
 import { useEffect, useState } from 'react'
 
 async function getData(){
+  
   const prisma = new PrismaClient()
   await prisma.initiatives.create({
     data: {
