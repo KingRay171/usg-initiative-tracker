@@ -29,7 +29,7 @@ export default async function Page({params}:{params: {id: string}}){
         <div className="flex flex-col space-y-2">
             <h3 className="text-3xl">Initiative Leaders:</h3>
             {init.leader.map(e => (
-                <h3 className="text-3xl">{e.name} ({e.contact})</h3>
+                <h3 key={e.id} className="text-3xl">{e.name} ({e.contact})</h3>
             ))}
         </div>
         
