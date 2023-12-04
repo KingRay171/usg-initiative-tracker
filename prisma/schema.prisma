@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,12 +7,72 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Initiative {
-  id  Int @id @default(autoincrement())
-  name  String
+enum Status {
+  PLANNING
+  IN_PROGRESS
+  ON_HOLD
+  COMPLETED
 }
 
-model Initiatives {
-  id  Int @id @default(autoincrement())
-  name  String
+model acadaffairs_init {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  leader      leader[] @relation("acadaffairs_inittoleader")
+  createdAt   DateTime @default(now())
+  lastUpdated DateTime @default(now())
+  status      Status   @default(PLANNING)
 }
+
+model comms_init {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  leader      leader[] @relation("comms_inittoleader")
+  createdAt   DateTime @default(now())
+  lastUpdated DateTime @default(now())
+  status      Status   @default(PLANNING)
+}
+
+model di_init {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  leader      leader[] @relation("di_inittoleader")
+  createdAt   DateTime @default(now())
+  lastUpdated DateTime @default(now())
+  status      Status   @default(PLANNING)
+}
+
+model it_init {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  leader      leader[] @relation("it_inittoleader")
+  createdAt   DateTime @default(now())
+  lastUpdated DateTime @default(now())
+  status      Status   @default(PLANNING)
+}
+
+model leader {
+  id               Int                @id @default(autoincrement())
+  name             String
+  contact          String
+  acadaffairs_init acadaffairs_init[] @relation("acadaffairs_inittoleader")
+  comms_init       comms_init[]       @relation("comms_inittoleader")
+  di_init          di_init[]          @relation("di_inittoleader")
+  it_init          it_init[]          @relation("it_inittoleader")
+  sl_init          sl_init[]          @relation("leadertosl_init")
+}
+
+model sl_init {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  leader      leader[] @relation("leadertosl_init")
+  createdAt   DateTime @default(now())
+  lastUpdated DateTime @default(now())
+  status      Status   @default(PLANNING)
+}
+
+    
