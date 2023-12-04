@@ -2,8 +2,6 @@ import prisma from "@/lib/prisma"
 import EditDelete from "@/app/components/editdelete"
 
 export default async function Page({params}:{params: {id: string}}){
-    
-    
     const init = await prisma.acadaffairs_init.findUnique({where: {id: Number(params.id)}, include: {leader: true}})
     
     if(!init) return (

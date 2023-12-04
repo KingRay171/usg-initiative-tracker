@@ -1,8 +1,5 @@
-import Image from 'next/image'
 import prisma from '@/lib/prisma'
-import useSWR from 'swr'
 import Init from '../components/init'
-import Nav from '../components/nav'
 import Link from 'next/link';
 import {cache} from 'react'
 

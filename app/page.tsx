@@ -1,8 +1,5 @@
-import Image from 'next/image'
-import { PrismaClient, it_init } from '@prisma/client'
-import { useEffect, useState } from 'react'
-import Nav from './components/nav'
 import {cache} from 'react'
+import prisma from '@/lib/prisma'
 
 const getData = cache(async () => {
   const acadaffairs_inits = await prisma.acadaffairs_init.findMany({take: 3, orderBy: {createdAt: "desc"}})

@@ -1,7 +1,7 @@
 "use client";
 import { Status } from "@prisma/client";
 import {useRouter, usePathname} from "next/navigation"
-import { FormEvent, SetStateAction, useState } from "react";
+import { FormEvent, useState } from "react";
 import Modal from 'react-modal'
 import Select from 'react-select'
 import LeaderModal from "./leadermodal";

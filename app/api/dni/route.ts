@@ -1,6 +1,4 @@
-import { cookies } from 'next/headers'
 import prisma from '@/lib/prisma';
-import {redirect} from 'next/navigation'
 import { Status } from '@prisma/client';
 
 export async function GET(request: Request) {

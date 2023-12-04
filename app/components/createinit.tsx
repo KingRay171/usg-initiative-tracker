@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import Select from 'react-select'
-import Modal from 'react-modal'
-import {useRouter, usePathname, redirect} from "next/navigation"
+import {useRouter, usePathname} from "next/navigation"
 import LeaderModal from "./leadermodal";
 
 type FormProps = {
