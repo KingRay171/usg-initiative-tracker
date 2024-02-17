@@ -58,5 +58,5 @@ jobs:
         with:
           app-name: 'usg-initiative-tracker'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C2E4B2E34FED45C0B875B5AC6A212563 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D7E4C7D484224CC1BE07AEEE25BE8D25 }}
           package: .
