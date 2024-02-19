@@ -10,7 +10,8 @@ export default function EditDelete({params, leaders}: {params:{
     id: number;
     name: string;
     description: string;
-    leader: {
+    
+    leaders: {
         id: number;
         name: string;
         contact: string;
@@ -29,7 +30,7 @@ export default function EditDelete({params, leaders}: {params:{
     const router = useRouter()
     const pathName = usePathname()
     const init_type = pathName.split("/")[1]
-    const leaderNames = params.leader.map((leader) => {return {...leader, value: leader.name, label: leader.name }})
+    const leaderNames = params.leaders.map((leader) => {return {...leader, value: leader.name, label: leader.name }})
     const [inputFields, setInputFields] = useState(leaderNames)
     const statusOptions = [
         {label: "Planning", value: "PLANNING"}, 
@@ -117,6 +118,7 @@ export default function EditDelete({params, leaders}: {params:{
 
             </form>
           </Modal>
+          
           <LeaderModal leaderModalOpen={leaderModalOpen} setLeaderModalOpen={setLeaderModalOpen} leaderState={leadersState} setLeaderState={setLeadersState} />
           </>
     )

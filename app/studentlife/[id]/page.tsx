@@ -1,8 +1,8 @@
 import prisma from "@/lib/prisma"
 import EditDelete from "@/app/components/editdelete"
 
-export default async function Page({params}:{params: {id: string}}){
-    const init = await prisma.sl_init.findUnique({where: {id: Number(params.id)}, include: {leader: true}})
+export default async function Page({params}:{params: {id: number}}){
+    const init = await prisma.init.findUnique({where: {id: Number(params.id)}, include: {leaders: true}})
     
     if(!init) return (
     <>
@@ -26,7 +26,7 @@ export default async function Page({params}:{params: {id: string}}){
         </div>
         <div className="flex flex-col space-y-2">
             <h3 className="text-3xl">Initiative Leaders:</h3>
-            {init.leader.map(e => (
+            {init.leaders.map(e => (
                 <h3 key={e.id} className="text-3xl">{e.name} ({e.contact})</h3>
             ))}
         </div>

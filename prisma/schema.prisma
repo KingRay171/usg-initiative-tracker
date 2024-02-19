@@ -14,65 +14,31 @@ enum Status {
   COMPLETED
 }
 
-model acadaffairs_init {
+enum InitType {
+  ACADAFFAIRS
+  COMMS
+  DI
+  IT
+  SL
+}
+
+model init {
   id          Int      @id @default(autoincrement())
   name        String
   description String
-  leader      leader[] @relation("acadaffairs_inittoleader")
+  type        InitType
+  leaders     leader[] @relation("inittoleader")
   createdAt   DateTime @default(now())
   lastUpdated DateTime @default(now())
   status      Status   @default(PLANNING)
 }
 
-model comms_init {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String
-  leader      leader[] @relation("comms_inittoleader")
-  createdAt   DateTime @default(now())
-  lastUpdated DateTime @default(now())
-  status      Status   @default(PLANNING)
-}
-
-model di_init {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String
-  leader      leader[] @relation("di_inittoleader")
-  createdAt   DateTime @default(now())
-  lastUpdated DateTime @default(now())
-  status      Status   @default(PLANNING)
-}
-
-model it_init {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String
-  leader      leader[] @relation("it_inittoleader")
-  createdAt   DateTime @default(now())
-  lastUpdated DateTime @default(now())
-  status      Status   @default(PLANNING)
-}
 
 model leader {
   id               Int                @id @default(autoincrement())
   name             String
   contact          String
-  acadaffairs_init acadaffairs_init[] @relation("acadaffairs_inittoleader")
-  comms_init       comms_init[]       @relation("comms_inittoleader")
-  di_init          di_init[]          @relation("di_inittoleader")
-  it_init          it_init[]          @relation("it_inittoleader")
-  sl_init          sl_init[]          @relation("leadertosl_init")
-}
-
-model sl_init {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String
-  leader      leader[] @relation("leadertosl_init")
-  createdAt   DateTime @default(now())
-  lastUpdated DateTime @default(now())
-  status      Status   @default(PLANNING)
+  inits            init[]       @relation("inittoleader")
 }
 
     

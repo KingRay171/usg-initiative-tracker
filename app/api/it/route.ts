@@ -1,8 +1,8 @@
 import prisma from '@/lib/prisma';
-import { Status } from '@prisma/client';
+import { InitType, Status } from '@prisma/client';
 
 export async function GET(request: Request) {
-  const allInits = await prisma.it_init.findMany()
+  const allInits = await prisma.init.findMany({where: {type: InitType.IT}})
   return Response.json(allInits);
 }
 
@@ -24,11 +24,12 @@ export async function POST(request: Request) {
     }
   })
 
-  await prisma.it_init.create({
+  await prisma.init.create({
     data: {
       name: name, 
       description: desc,
-      leader: {
+      type: InitType.IT,
+      leaders: {
         connect: leaders.map((e) => {
           return {id: e.id}
         })

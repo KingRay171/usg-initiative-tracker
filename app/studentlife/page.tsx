@@ -2,9 +2,10 @@ import prisma from '@/lib/prisma'
 import Init from '../components/init'
 import Link from 'next/link';
 import {cache} from 'react'
+import { InitType } from '@prisma/client';
 
 const getData = cache(async () => {
-  const itInits = await prisma.sl_init.findMany()
+  const itInits = await prisma.init.findMany({where: {type: InitType.SL}})
   return itInits
 })
 
@@ -16,7 +17,9 @@ export default async function Home() {
 
       <div className="mb-32 text-center w-full mb-0">
         <h2 className="text-6xl">Student Life Initiatives:</h2>
-        {itInits.map(e => (<Init key={e.id} info={e} />))}
+        <div className='grid grid-cols-5 gap-4'>
+          {itInits.map(e => (<Init key={e.id} info={e} />))}
+        </div>
         <Link href="/studentlife/new" className='border rounded-lg p-2'>Create an Initiative</Link>
       </div>
     </main>

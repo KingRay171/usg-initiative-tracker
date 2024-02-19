@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma";
 import { Status } from "@prisma/client";
 
 export async function DELETE(request: Request, context: any){
-    await prisma.acadaffairs_init.delete({where: {id: Number(context.params.id)}})
+    await prisma.init.delete({where: {id: context.params.id}})
     return new Response("Success", {status: 200})
 }
 
@@ -24,14 +24,14 @@ export async function POST(request: Request, context: any){
     }
   })
 
-  await prisma.acadaffairs_init.update({
+  await prisma.init.update({
     where: {
-        id: Number(id)
+        id: id
     },
     data: {
       name: name, 
       description: desc,
-      leader: {
+      leaders: {
         set: [],
         connect: leaders.map((e) => {
           return {id: e.id}
