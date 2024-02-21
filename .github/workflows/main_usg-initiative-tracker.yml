@@ -60,6 +60,5 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'usg-initiative-tracker'
-          slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D7E4C7D484224CC1BE07AEEE25BE8D25 }}
-          package: .
+          package: ./dist/usg-initiative-tracker
