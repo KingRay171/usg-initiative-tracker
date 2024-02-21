@@ -16,7 +16,7 @@ export async function POST(request: Request, context: any){
   body.splice(0, 2)
   body.splice(body.length - 1, 1)
 
-  let leaders = await prisma.leader.findMany({
+  let leaders = await prisma.user.findMany({
     where: {
       OR: body.map((e) => {
         return {name: {equals: e[1] as string}}

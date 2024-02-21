@@ -4,7 +4,7 @@ import Link from 'next/link';
 import InitForm from '../../components/createinit'
 
 const getData = cache(async () => {
-  const leaders = await prisma.leader.findMany()
+  const leaders = await prisma.user.findMany()
   return leaders
 })
 

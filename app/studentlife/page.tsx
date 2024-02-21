@@ -17,7 +17,7 @@ export default async function Home() {
 
       <div className="mb-32 text-center w-full mb-0">
         <h2 className="text-6xl">Student Life Initiatives:</h2>
-        <div className='grid grid-cols-5 gap-4'>
+        <div>
           {itInits.map(e => (<Init key={e.id} info={e} />))}
         </div>
         <Link href="/studentlife/new" className='border rounded-lg p-2'>Create an Initiative</Link>

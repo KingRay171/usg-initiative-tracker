@@ -4,7 +4,6 @@ import {useRouter, usePathname} from "next/navigation"
 import { FormEvent, useState } from "react";
 import Modal from 'react-modal'
 import Select from 'react-select'
-import LeaderModal from "./leadermodal";
 
 export default function EditDelete({params, leaders}: {params:{
     id: number;
@@ -14,24 +13,28 @@ export default function EditDelete({params, leaders}: {params:{
     leaders: {
         id: number;
         name: string;
-        contact: string;
+        email: string;
+        admin: boolean;
+        password: string;
     }[];
     status: Status
 }, leaders: {
     
         id: number;
         name: string;
-        contact: string;
+        email: string;
+        admin: boolean;
+        password: string;
     }[]
 }){
     
     const [modalOpen, setModalOpen] = useState(false)
-    const [leaderModalOpen, setLeaderModalOpen] = useState(false)
     const router = useRouter()
     const pathName = usePathname()
     const init_type = pathName.split("/")[1]
-    const leaderNames = params.leaders.map((leader) => {return {...leader, value: leader.name, label: leader.name }})
-    const [inputFields, setInputFields] = useState(leaderNames)
+    const initLeaderNames = params.leaders.map((leader) => {return {...leader, value: leader.name, label: leader.name }})
+    const allLeaderNames = leaders.map((leader) => {return {...leader, value: leader.name, label: leader.name }})
+    const [inputFields, setInputFields] = useState(initLeaderNames)
     const statusOptions = [
         {label: "Planning", value: "PLANNING"}, 
         {label: "In Progress", value: "IN_PROGRESS"}, 
@@ -39,8 +42,6 @@ export default function EditDelete({params, leaders}: {params:{
         {label: "Completed", value: "COMPLETED"}
     ]
 
-    const [leadersState, setLeadersState] = useState(leaders)
-    const leaderStateNames = leadersState.map((leader) => {return {...leader, value: leader.name, label: leader.name }})
 
     const remove = (idx: number) => {
         console.log(idx)
@@ -82,22 +83,24 @@ export default function EditDelete({params, leaders}: {params:{
             }}>Edit</button>
             <button onClick={submitDelete}>Delete</button>
           </div>
-          <Modal isOpen={modalOpen} onRequestClose={() => setModalOpen(false)} contentLabel="Edit an Initiative" ariaHideApp={false} style={{content: {width: "50vw", height: '50vh'}}}>
-            <h2 className="text-black">Hello</h2>
-            <button onClick={() => setModalOpen(false)} className="text-black">close</button>
-            <div className="text-black">I am a modal</div>
-            <form onSubmit={submitEdit}>
+          <Modal isOpen={modalOpen} onRequestClose={() => setModalOpen(false)} contentLabel="Edit an Initiative" ariaHideApp={false} style={{content: {width: "50vw", height: '60vh'}}}>
+            
+            <button onClick={() => setModalOpen(false)} className="text-black">X</button>
+            <h2 className="text-black">Edit {params.name}</h2>
+            <form onSubmit={submitEdit} className="flex flex-col space-y-5">
+              <div>
               <label className="text-black">Initiative Name:</label>
               <input type='text' id="name" name="name" className="border border-2 rounded-lg text-black" defaultValue={params.name}/>
+              </div>
+              <div>
               <label className="text-black">Initiative Description:</label>
               <textarea id="desc" name="desc" className="border border-2 rounded-lg text-black" defaultValue={params.description}/>
+              </div>
+              <div>
               <label className="text-black">Initiative Leaders:</label>
               {inputFields.map((e, idx) => (
                   <div key={idx}>
-                      <Select id={"leader" + idx} name={"leader" + idx} options={leaderStateNames} styles={{input: (base) => ({...base, color: "black"}), option: (base) => ({...base, color: "black"})}} defaultValue={e}/>
-                      <button className="border border-2 rounded-lg text-black" onClick={(e) => {
-                          e.preventDefault()
-                          setLeaderModalOpen(true)}}>Not on the List?</button>
+                      <Select id={"leader" + idx} name={"leader" + idx} options={allLeaderNames} styles={{input: (base) => ({...base, color: "black"}), option: (base) => ({...base, color: "black"})}} defaultValue={e}/>
                       {idx != 0 && (<button className="border border-2 rounded-lg text-black" onClick={(e) => {
                           e.preventDefault()
                           remove(idx)
@@ -105,21 +108,21 @@ export default function EditDelete({params, leaders}: {params:{
 
                   </div>
               ))}
+              
               <button className="border border-2 rounded-lg text-black" onClick={(e) => {
                   e.preventDefault()
-                  setInputFields([...inputFields, {id: 0, name: "", contact: "", label: "", value: ""}])
+                  setInputFields([...inputFields, {id: 0, name: "", email: "", admin: false, password: "", label: "", value: ""}])
               }}>Add an Initiative Leader</button>
-
+              </div>
+              <div>
               <label className="text-black">Initiative Status:</label>
               <Select id="status" name="status" options={statusOptions} styles={{input: (base) => ({...base, color: "black"}), option: (base) => ({...base, color: "black"})}} value={{value: params.status as string, label: params.status as string}}/>
-
+              </div>
               <input className="border border-2 rounded-lg text-black" type='submit' value="Update"/>
-
 
             </form>
           </Modal>
           
-          <LeaderModal leaderModalOpen={leaderModalOpen} setLeaderModalOpen={setLeaderModalOpen} leaderState={leadersState} setLeaderState={setLeadersState} />
           </>
     )
 }

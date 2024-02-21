@@ -15,7 +15,7 @@ export default async function Home() {
     <main className="py-8 min-h-screen">
       <div className="mb-32 text-center w-full mb-0">
         <h2 className="text-6xl">Communications Initiatives:</h2>
-        <div className='grid grid-cols-5 gap-4'>
+        <div>
           {itInits.map(e => (<Init key={e.id} info={e} />))}
         </div>
         <Link href="/comms/new" className='border rounded-lg p-2'>Create an Initiative</Link>

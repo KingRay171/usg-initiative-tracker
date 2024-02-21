@@ -3,21 +3,20 @@
 import { useState } from "react";
 import Select from 'react-select'
 import {useRouter, usePathname} from "next/navigation"
-import LeaderModal from "./leadermodal";
 
 type FormProps = {
     leaders: {
         id: number;
+        email: string;
         name: string;
-        contact: string;
+        password: string;
+        admin: boolean
     }[]
 }
 
 
 export default function InitForm({leaders}: FormProps){
     const [inputFields, setInputFields] = useState([{name: '', contact: ''}])
-    const [modalOpen, setModalOpen] = useState(false)
-    const [leadersState, setLeadersState] = useState(leaders)
     const router = useRouter()
     const pathName = usePathname()
     const init_type = pathName.split("/")[1]
@@ -28,7 +27,7 @@ export default function InitForm({leaders}: FormProps){
         data.splice(idx, 1)
         setInputFields(data)
     }
-    const leaderNames = leadersState.map((leader) => {return {...leader, value: leader.name, label: leader.name }})
+    const leaderNames = leaders?.map((leader) => {return {...leader, value: leader.name, label: leader.name }})
     const statusOptions = [
         {label: "Planning", value: "PLANNING"}, 
         {label: "In Progress", value: "IN_PROGRESS"}, 
@@ -60,9 +59,7 @@ export default function InitForm({leaders}: FormProps){
             {inputFields.map((e, idx) => (
                 <div key={idx}>
                     <Select id={"leader" + idx} name={"leader" + idx} options={leaderNames} styles={{input: (base) => ({...base, color: "black"}), option: (base) => ({...base, color: "black"})}}/>
-                    <button onClick={(e) => {
-                        e.preventDefault()
-                        setModalOpen(true)}}>Not on the List?</button>
+                    
                     {idx != 0 && (<button onClick={(e) => {
                         e.preventDefault()
                         remove(idx)
@@ -79,8 +76,6 @@ export default function InitForm({leaders}: FormProps){
             <input type='submit' value="Create"/>
 
           </form>
-          <LeaderModal leaderModalOpen={modalOpen} setLeaderModalOpen={setModalOpen} leaderState={leadersState} setLeaderState={setLeadersState}/>
-          
           </>
     )
 }
