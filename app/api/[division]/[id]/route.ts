@@ -1,6 +1,8 @@
 import prisma from "@/lib/prisma";
 import { Status } from "@prisma/client";
 
+
+
 export async function DELETE(request: Request, context: any){
     await prisma.init.delete({where: {id: Number(context.params.id)}})
     return new Response("Success", {status: 200})
@@ -15,7 +17,6 @@ export async function POST(request: Request, context: any){
   const status = body[body.length - 1][1].valueOf() as string
   body.splice(0, 2)
   body.splice(body.length - 1, 1)
-  console.log(body)
   let leaders = await prisma.user.findMany({
     where: {
       OR: body.map((e) => {

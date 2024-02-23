@@ -41,7 +41,6 @@ export default function LoginForm() {
                 name="email"
                 placeholder="Enter your email address"
                 value={email}
-                defaultValue={email}
                 onChange={(e) => {
                   e.preventDefault();
                   setEmail(e.target.value);
@@ -66,7 +65,6 @@ export default function LoginForm() {
                 name="password"
                 placeholder="Enter password"
                 value={password}
-                defaultValue={password}
                 onChange={(e) => {
                   e.preventDefault();
                   setPassword(e.target.value);
