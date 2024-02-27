@@ -1,21 +1,36 @@
-import { auth } from "@/auth"
+
 import Image from "next/image"
 import Link from "next/link"
-import { signOut } from '@/auth'
+import { lucia, validateRequest } from "@/auth";
+import { cookies } from "next/headers";
 import { PowerIcon } from '@heroicons/react/24/outline';
+import { redirect } from "next/navigation"
 
 export default async function Nav() {
-  const session = await auth()
+  const session = await validateRequest()
+  console.log(session)
   return (
     <div className="flex justify-between px-20 w-[100%] bg-[#0A304E] items-center" >
       <div>
         <Link href="/"><Image src={"/usg.jpg"} alt="USG Logo" width={100} height={40}/></Link>
         
-        {session && (
+        {session.session && (
             <form
             action={async () => {
               'use server';
-              await signOut({redirect: true, redirectTo: "/"});
+              const { session } = await validateRequest();
+              if (!session) {
+                return {
+                  error: "Unauthorized"
+                };
+              }
+            
+              await lucia.invalidateSession(session.id);
+            
+              const sessionCookie = lucia.createBlankSessionCookie();
+              cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+              return redirect("/login");
+            //await signOut({redirect: true, redirectTo: "/"});
             }}
           >
             <button className="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
@@ -24,7 +39,7 @@ export default async function Nav() {
             </button>
           </form>
           )}
-          {!session && (
+          {!session.session && (
           <Link href={"/login"} className="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
             <PowerIcon className="w-6" />
             <div className="hidden md:block">Log In</div>

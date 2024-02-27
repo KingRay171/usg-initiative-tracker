@@ -6,12 +6,12 @@ import Modal from 'react-modal'
 import Select from 'react-select'
 
 export default function EditDelete({params, leaders}: {params:{
-    id: number;
+    id: string;
     name: string;
     description: string;
     
     leaders: {
-        id: number;
+        id: string;
         name: string;
         email: string;
         admin: boolean;
@@ -20,7 +20,7 @@ export default function EditDelete({params, leaders}: {params:{
     status: Status
 }, leaders: {
     
-        id: number;
+        id: string;
         name: string;
         email: string;
         admin: boolean;
@@ -111,7 +111,7 @@ export default function EditDelete({params, leaders}: {params:{
               
               <button className="border border-2 rounded-lg text-black" onClick={(e) => {
                   e.preventDefault()
-                  setInputFields([...inputFields, {id: 0, name: "", email: "", admin: false, password: "", label: "", value: ""}])
+                  setInputFields([...inputFields, {id: "", name: "", email: "", admin: false, password: "", label: "", value: ""}])
               }}>Add an Initiative Leader</button>
               </div>
               <div>

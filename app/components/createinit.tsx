@@ -6,7 +6,7 @@ import {useRouter, usePathname} from "next/navigation"
 
 type FormProps = {
     leaders: {
-        id: number;
+        id: string;
         email: string;
         name: string;
         password: string;

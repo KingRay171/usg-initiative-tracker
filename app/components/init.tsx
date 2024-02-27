@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function Init({info}: {info: {id: number, name: string, description: string}}){
+export default function Init({info}: {info: {id: string, name: string, description: string}}){
     const pathname = usePathname()
     return (
        <Link href={`${pathname}/${info.id}`}>

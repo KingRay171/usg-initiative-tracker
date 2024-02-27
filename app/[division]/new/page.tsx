@@ -2,7 +2,8 @@ import prisma from '@/lib/prisma'
 import { cache } from 'react'
 import Link from 'next/link';
 import InitForm from '../../components/createinit'
-import { auth } from "../../../auth"
+import { validateRequest } from '@/auth'; 
+import { redirect } from "next/navigation";
 
 const getData = cache(async () => {
   const leaders = await prisma.user.findMany()
@@ -10,8 +11,8 @@ const getData = cache(async () => {
 })
 
 export default async function Home({params}:{params: {division: string}}) {
-    const session = await auth()
-    if(!session) return <></>
+    const session = await validateRequest()
+    if(!(session.session)) return redirect("/login")
     
     const leaders = await getData()
     

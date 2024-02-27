@@ -23,7 +23,7 @@ enum InitType {
 }
 
 model init {
-  id          Int      @id @default(autoincrement())
+  id          String      @id @default(cuid())
   name        String
   description String
   type        InitType
@@ -34,11 +34,18 @@ model init {
 }
 
 model user {
-  id               Int                @id @default(autoincrement())
+  id                String                @id @default(cuid())
   email             String
   name              String
   password          String
   admin             Boolean
   inits             init[]
+  sessions          session[]
 }
-    
+
+model session {
+  id        String   @id @default(cuid())
+  userId    String
+  expiresAt DateTime
+  user      user     @relation(references: [id], fields: [userId], onDelete: Cascade)
+}

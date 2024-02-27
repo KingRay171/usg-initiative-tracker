@@ -7,12 +7,13 @@ import {
 } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { useFormState, useFormStatus } from 'react-dom';
-import { authenticate } from '@/lib/actions'; 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import login from './login';
+
+
  
 export default function LoginForm() {
-  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
   const { pending } = useFormStatus();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -20,7 +21,7 @@ export default function LoginForm() {
  
   return (
     <>
-    <form action={dispatch} className="space-y-3">
+    <form action={login} className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`mb-3 text-2xl`}>
           Please log in to continue.
@@ -85,12 +86,6 @@ export default function LoginForm() {
           aria-live="polite"
           aria-atomic="true"
         >
-          {errorMessage && (
-            <>
-              <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-              <p className="text-sm text-red-500">{errorMessage}</p>
-            </>
-          )}
         </div>
       </div>
     </form>

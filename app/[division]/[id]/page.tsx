@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma"
 import EditDelete from "@/app/components/editdelete"
 import { InitType } from "@prisma/client";
 
-export default async function Page({params}:{params: {division: string, id: number}}){
+export default async function Page({params}:{params: {division: string, id: string}}){
     const divisions = ["it", "studentlife", "dni", "acadaffairs", "comms"]
     if(divisions.includes(params.division)){
         let division_enum: InitType;
@@ -28,7 +28,7 @@ export default async function Page({params}:{params: {division: string, id: numb
             break;
           }
         }
-        const init = await prisma.init.findUnique({where: {id: Number(params.id)}, include: {leaders: true}})
+        const init = await prisma.init.findUnique({where: {id: params.id}, include: {leaders: true}})
         if(!init || init.type !== division_enum) return (
         <>
         <div>This initiative does not exist</div>
