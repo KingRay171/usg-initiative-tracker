@@ -12,11 +12,9 @@ export default async function Home() {
   return (
     <main className=" min-h-screen">
       <section className='cover bg-bg1 bg-no-repeat bg-cover h-[80vh] w-screen'></section>
-
       <div className="mb-32 text-center lg:max-w-5xl lg:w-full lg:mb-0">
         <p>Latest Initiatives:</p>
         {inits.map(e => (<div key={e.id}>{e.name}</div>))}
-        
       </div>
     </main>
   )
