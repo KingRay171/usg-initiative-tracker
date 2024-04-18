@@ -1,12 +1,12 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
 }
-
 enum Status {
   PLANNING
   IN_PROGRESS
@@ -20,6 +20,7 @@ enum InitType {
   DI
   IT
   SL
+  FINANCE
 }
 
 model init {

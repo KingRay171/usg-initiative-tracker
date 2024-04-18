@@ -10,43 +10,24 @@ const getData = cache(async (div: InitType) => {
 })
 
 export default async function Home({params}:{params: {division: string}}) {
-  const divisions = ["it", "studentlife", "dni", "acadaffairs", "comms"]
-  if(divisions.includes(params.division)){
-    let division_enum: InitType;
-    let division_name: string;
-    switch(params.division){
-      case "it": { 
-          division_enum = InitType.IT 
-          division_name = "IT"
-          break;
-      }
-      case "studentlife": {
-        division_enum = InitType.SL
-        division_name = "Student Life"
-          break;
-      }
-      case "dni": {
-        division_enum = InitType.DI
-        division_name = "Diversity and Inclusion"
-          break;
-      }
-      case "acadaffairs": {
-        division_enum = InitType.ACADAFFAIRS
-        division_name = "Academic Affairs"
-          break;
-      }
-      default: {
-        division_enum = InitType.COMMS
-        division_name = "Communications"
-        break;
-      }
-
+  const divisionsDict: {[key: string]: [InitType, string]} = {
+    "it": [InitType.IT, "IT"], 
+    "studentlife": [InitType.SL, "Student Life"], 
+    "dni": [InitType.DI, "Diversity and Inclusion"], 
+    "acadaffairs": [InitType.ACADAFFAIRS, "Academic Affairs"],
+    "comms": [InitType.COMMS, "Communications"],
+    "finance": [InitType.FINANCE, "Finance"],
+  }
+  const [divisionEnum, divisionName] = divisionsDict[params.division];
+    if (!divisionEnum){
+      return <></>
     }
-    const inits = await getData(division_enum)
+
+    const inits = await getData(divisionEnum)
     return (
       <main className="py-8 min-h-screen">
         <div className="mb-32 text-center w-full mb-0">
-          <h2 className="text-6xl">{division_name} Initiatives:</h2>
+          <h2 className="text-6xl">{divisionName} Initiatives:</h2>
           <div>
             {inits.map(e => (<Init key={e.id} info={e} />))}
           </div>
@@ -55,6 +36,4 @@ export default async function Home({params}:{params: {division: string}}) {
       </main>
     )
   }
-  
-}
 

@@ -10,6 +10,7 @@ function initTypeFromCx(context: any): InitType | undefined{
           case "studentlife": return InitType.SL
           case "dni": return InitType.DI
           case "acadaffairs": return InitType.ACADAFFAIRS
+          case "finance": return InitType.FINANCE
           default: return InitType.COMMS
         }
     }

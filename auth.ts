@@ -24,7 +24,8 @@ const adapter = new PrismaAdapter(client.session, client.user);
 	getUserAttributes: (attributes) => {
 		return {
 			// attributes has the type of DatabaseUserAttributes
-			email: attributes.email
+			email: attributes.email,
+			name: attributes.name
 		};
 	}
 });
@@ -64,6 +65,6 @@ declare module "lucia" {
 
 interface DatabaseUserAttributes {
 	email: string;
-
+	name: string;
 }
 

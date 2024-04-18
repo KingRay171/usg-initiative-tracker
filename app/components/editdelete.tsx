@@ -5,6 +5,7 @@ import { FormEvent, useState } from "react";
 import Modal from 'react-modal'
 import Select from 'react-select'
 
+
 export default function EditDelete({params, leaders}: {params:{
     id: string;
     name: string;
