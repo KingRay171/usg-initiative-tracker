@@ -1,12 +1,12 @@
-import prisma from '@/lib/prisma'
 import { cache } from 'react'
 import Link from 'next/link';
 import InitForm from '../../components/createinit'
 import { validateRequest } from '@/auth'; 
 import { redirect } from "next/navigation";
+import { getAllLeaders } from '@/app/queries';
 
 const getData = cache(async () => {
-  const leaders = await prisma.user.findMany()
+  const leaders = await getAllLeaders()
   return leaders
 })
 
@@ -18,7 +18,7 @@ export default async function Home({params}:{params: {division: string}}) {
     
     return (
       
-      <main className="min-h-screen flex flex-col items-center">
+      <main className="min-h-screen flex flex-col items-center dark:bg-[#1B1D1E]">
 
         <div className="mb-32 text-center w-[50vw] mb-0 ">
           <p>Create an Initiative</p>

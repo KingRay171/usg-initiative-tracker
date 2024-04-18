@@ -9,9 +9,9 @@ import SignedOut from "./signedout";
 export default async function Nav() {
   const routes = [
     {route: "/it", name: "IT"},
-    {route: "/studentlife", name: "Student Life"},
+    {route: "/sl", name: "Student Life"},
     {route: "/acadaffairs", name: "Academic Affairs"},
-    {route: "/dni", name: "Diversity and Inclusion"},
+    {route: "/di", name: "Diversity and Inclusion"},
     {route: "/finance", name: "Finance"},
     {route: "/comms", name: "Communications"}
   ]

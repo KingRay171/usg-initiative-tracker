@@ -15,13 +15,7 @@ export async function POST(request: Request, context: any){
   const status = body[body.length - 1][1].valueOf() as string
   body.splice(0, 2)
   body.splice(body.length - 1, 1)
-  let leaders = await prisma.user.findMany({
-    where: {
-      OR: body.map((e) => {
-        return {name: {equals: e[1] as string}}
-      })
-    }
-  })
+  let leaders = body.map((e) => {return {id: (e[1] as string).split(":")[1].split(")")[0]}})
 
   await prisma.init.update({
     where: {
@@ -32,10 +26,7 @@ export async function POST(request: Request, context: any){
       description: desc,
       leaders: {
         set: [],
-        connect: leaders.map((e) => {
-          return {id: e.id}
-        })
-        
+        connect: leaders
       },
       lastUpdated: new Date(),
       status: status as Status

@@ -1,33 +1,26 @@
-import prisma from "@/lib/prisma"
 import EditDelete from "@/app/components/editdelete"
 import { InitType } from "@prisma/client";
 import { validateRequest } from "@/auth"; 
+import { getAllLeaders, getInitFromId } from "@/app/queries";
 
 export default async function Page({params}:{params: {division: string, id: string}}){
-    const divisionsDict: {[key: string]: InitType} = {
-      "it": InitType.IT, 
-      "studentlife": InitType.SL, 
-      "dni": InitType.DI, 
-      "acadaffairs": InitType.ACADAFFAIRS,
-      "comms": InitType.COMMS,
-      "finance": InitType.FINANCE
-    }
+
     const session = await validateRequest()
-    const division_enum = divisionsDict[params.division];
-    if (!division_enum){
+    const divisionEnum = InitType[params.division.toUpperCase() as keyof typeof InitType]
+    if (!divisionEnum){
       return <></>
     }
+    const init = await getInitFromId(params.id)
     
-    const init = await prisma.init.findUnique({where: {id: params.id}, include: {leaders: true}})
-    if(!init || init.type !== division_enum) return (
+    if(!init || init.type !== divisionEnum) return (
       <>
       <div>This initiative does not exist</div>
       <p>The URL references an initiative that could not be found. Either it was recently deleted or a mistake was made.</p>
       </>
     )
-    const leaders = await prisma.user.findMany()
+    const leaders = await getAllLeaders()
     return (
-        <>
+        <div className="dark:bg-[#1B1D1E]">
         <div className="border border-2 rounded-2xl mx-8 my-8 flex flex-col px-16 py-4 space-y-4">
         <h1 className="text-6xl">{init.name}</h1>
         <div className="flex space-x-4">
@@ -48,7 +41,7 @@ export default async function Page({params}:{params: {division: string, id: stri
         {session.session && <EditDelete params={init} leaders={leaders} />}
         </div>
             
-        </>
+        </div>
     )
     
 }

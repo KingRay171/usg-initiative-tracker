@@ -20,9 +20,9 @@ export default function LoginForm() {
   const router = useRouter()
  
   return (
-    <>
-    <form action={login} className="space-y-3">
-      <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
+    <div className="dark:bg-[#1B1D1E]">
+    <form action={login} className="space-y-3 dark:bg-[#1B1D1E]">
+      <div className="flex-1 rounded-lg dark:bg-[#1B1D1E] [&_input]:dark:bg-gray-800 [&_input]:dark:text-white px-6 pb-4 pt-8">
         <h1 className={`mb-3 text-2xl`}>
           Please log in to continue.
         </h1>
@@ -89,10 +89,10 @@ export default function LoginForm() {
         </div>
       </div>
     </form>
-    <button className="mt-4 w-full bg-white border rounded-md border-gray-200 w-100" aria-disabled={pending} onClick={() => {router.push("/signup")}}>
-      <div className='text-black '>Sign up</div> <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50 bg-black" />
+    <button className="mt-4 w-full border rounded-md border-gray-200 w-100" aria-disabled={pending} onClick={() => {router.push("/signup")}}>
+      <div className='text-black dark:text-white'>Sign up</div> <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50 bg-black" />
     </button>
-    </>
+    </div>
   );
 }
  
@@ -100,8 +100,8 @@ function LoginButton() {
   const { pending } = useFormStatus();
  
   return (
-    <button className="mt-4 w-full bg-white border rounded-md border-gray-200 w-100" aria-disabled={pending}>
-      <div className='text-black '>Log in</div> <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50 bg-black" />
+    <button className="mt-4 w-full border rounded-md border-gray-200 w-100" aria-disabled={pending}>
+      <div className='text-black dark:text-white'>Log in</div> <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50 bg-black" />
     </button>
   );
 }

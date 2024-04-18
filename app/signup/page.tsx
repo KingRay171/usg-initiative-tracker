@@ -21,9 +21,9 @@ export default function LoginForm() {
   const router = useRouter()
  
   return (
-    <>
-    <form className="space-y-3" action={signup}>
-      <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
+    <div className='dark:bg-[#1B1D1E]'>
+    <form className="space-y-3 dark:bg-[#1B1D1E] [&_input]:dark:bg-gray-800 [&_input]:dark:text-white" action={signup}>
+      <div className="flex-1 rounded-lg px-6 pb-4 pt-8">
         <h1 className={`mb-3 text-2xl`}>
           Please sign up to continue.
         </h1>
@@ -42,7 +42,6 @@ export default function LoginForm() {
                 type="text"
                 name="name"
                 placeholder="Enter your full name"
-                value={name}
                 defaultValue={name}
                 onChange={(e) => {
                   e.preventDefault();
@@ -67,7 +66,6 @@ export default function LoginForm() {
                 type="email"
                 name="email"
                 placeholder="Enter your email address"
-                value={email}
                 defaultValue={email}
                 onChange={(e) => {
                   e.preventDefault();
@@ -93,7 +91,6 @@ export default function LoginForm() {
                 type="password"
                 name="password"
                 placeholder="Enter password"
-                value={password}
                 defaultValue={password}
                 onChange={(e) => {
                   e.preventDefault();
@@ -119,7 +116,6 @@ export default function LoginForm() {
                 type="password"
                 name="adminpass"
                 placeholder="Enter admin password (optional)"
-                value={adminPassword}
                 defaultValue={adminPassword}
                 onChange={(e) => {
                   e.preventDefault();
@@ -144,10 +140,10 @@ export default function LoginForm() {
         </div>
       </div>
     </form>
-    <button className="mt-4 w-full bg-white border rounded-md border-gray-200 w-100" aria-disabled={pending} onClick={() => {router.push("/login")}}>
-      <div className='text-black '>Log in</div> <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50 bg-black" />
+    <button className="mt-4 w-full border rounded-md border-gray-200 w-100" aria-disabled={pending} onClick={() => {router.push("/login")}}>
+      <div className='text-black dark:text-white'>Log in</div> <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50 bg-black" />
     </button>
-    </>
+    </div>
   );
 }
  
@@ -155,8 +151,8 @@ function LoginButton() {
   const { pending } = useFormStatus();
  
   return (
-    <button className="mt-4 w-full bg-white border rounded-md border-gray-200 w-100" aria-disabled={pending}>
-      <div className='text-black '>Sign up</div> <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50 bg-black" />
+    <button className="mt-4 w-full border rounded-md border-gray-200 w-100" aria-disabled={pending}>
+      <div className='text-black dark:text-white'>Sign up</div> <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50 bg-black" />
     </button>
   );
 }

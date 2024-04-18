@@ -2,7 +2,7 @@
 import { cookies } from "next/headers";
 import { lucia } from "@/auth";
 import { redirect } from "next/navigation";
-import prisma from '@/lib/prisma';
+import { getUserFromEmail } from "../queries";
 
 interface ActionResult {
 	error: string;
@@ -29,8 +29,7 @@ export default async function login(formData: FormData): Promise<ActionResult> {
 		};
 	}
 
-	const existingUser = await prisma.user.findFirst({where: {email}})
-	console.log(existingUser)
+	const existingUser = await getUserFromEmail(email)
 	if (!existingUser) {
 		// NOTE:
 		// Returning immediately allows malicious actors to figure out valid usernames from response times,
