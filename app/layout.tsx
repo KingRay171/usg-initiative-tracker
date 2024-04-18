@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
 import Nav from './components/nav'
 
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body className={`${inter.className} dark:bg-[#1B1D1E]`}>
         <Nav />
         {children}
+        <Analytics />
       </body>
     </html>
   )
