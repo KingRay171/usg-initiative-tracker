@@ -7,12 +7,6 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - "README.md"
-      - ".husky"
-      - ".github/**"
-      - "**/*.csv"
-      - .env*
   workflow_dispatch:
 
 jobs:
@@ -29,14 +23,12 @@ jobs:
 
       - name: npm install, build, and test
         run: |
-          touch .env
-          echo DATABASE_URL=${{secrets.DATABASE_URL}} >> .env
           npm install
           npm run build --if-present
           npm run test --if-present
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./* .next .env -qr
+        run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
@@ -65,9 +57,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_4B6BD7CB16164D8199B4CF96D08A2CBC }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_AE7B6C4A14C44DCA912A01197B61CE9E }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_DEC11C629B8D40D5ABCB44ABD9F6DE64 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D3801BE2ECC54475B2E8742C1D09D660 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_3BA0176DC522475191E2C1742248B3DE }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F82FFAC3A8A241BBAC3C7659C9D3E847 }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -75,5 +67,5 @@ jobs:
         with:
           app-name: 'usg-initiative-tracker'
           slot-name: 'Production'
-          package: release.zip
+          package: .
           
