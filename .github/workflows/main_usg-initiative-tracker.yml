@@ -12,8 +12,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: env1
-    
+
     steps:
       - uses: actions/checkout@v4
 
@@ -23,8 +22,6 @@ jobs:
           node-version: '20.x'
 
       - name: npm install, build, and test
-        env:
-          DATABASE_URL: ${{secrets.DATABASE_URL}}
         run: |
           npm install
           npm run build --if-present
@@ -45,6 +42,8 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    permissions:
+      id-token: write #This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -54,11 +53,19 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
+      
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D3801BE2ECC54475B2E8742C1D09D660 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_3BA0176DC522475191E2C1742248B3DE }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F82FFAC3A8A241BBAC3C7659C9D3E847 }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'usg-initiative-tracker'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D7E4C7D484224CC1BE07AEEE25BE8D25 }}
-          package: ./dist/usg-initiative-tracker
+          slot-name: 'Production'
+          package: .
+          
