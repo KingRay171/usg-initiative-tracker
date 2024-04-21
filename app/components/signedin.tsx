@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation"
 import { User, Session } from 'lucia';
 
-type validatedRequest = {
+export type validatedRequest = {
         user: User;
         session: Session;
 }
@@ -26,11 +26,10 @@ async function logOut() {
     //await signOut({redirect: true, redirectTo: "/"});
   }
 
-export default async function SignedIn({validatedReq}: {validatedReq: validatedRequest}) {
-    const name = validatedReq.user.name
+export default async function SignedIn({params}: {params: {name: string}}) {
     return (
         <div className="space-y-2">
-          <p>Hello, {name}</p>
+          <p>Hello, {params.name}</p>
           <form action={logOut}>
             <button className="
             flex h-[48px] grow items-center justify-center gap-2 rounded-md 
