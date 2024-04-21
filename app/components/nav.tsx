@@ -9,7 +9,7 @@ import { User } from "lucia";
 import SignedIn from "./signedin";
 import { Session } from "lucia";
 
-type UnvalidatedSession = {
+export type UnvalidatedSession = {
   user: User;
   session: Session;
 } | {

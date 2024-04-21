@@ -3,9 +3,10 @@ import { InitType } from "@prisma/client";
 import { validateRequest } from "@/auth"; 
 import { getAllLeaders, getInitFromId } from "@/app/queries";
 import { Suspense } from "react";
+import { UnvalidatedSession } from "@/app/components/nav";
 
-const handleInitExists = async ({params}:{params: {division: string, id: string}}, divisionEnum: InitType) => {
-    const session = await validateRequest()
+const handleInitExists = async ({params}:{params: {division: string, id: string}}, divisionEnum: InitType, session: UnvalidatedSession) => {
+    
     const init = await getInitFromId(params.id)
     if(!init || init.type !== divisionEnum) return (
         <>
@@ -41,14 +42,14 @@ const handleInitExists = async ({params}:{params: {division: string, id: string}
 
 export default async function Page({params}:{params: {division: string, id: string}}){
 
-    
+    const session = await validateRequest()
     const divisionEnum = InitType[params.division.toUpperCase() as keyof typeof InitType]
     if (!divisionEnum){
       return <></>
     }
 
     return (
-        <Suspense>{handleInitExists({params}, divisionEnum)}</Suspense>
+        <Suspense>{handleInitExists({params}, divisionEnum, session)}</Suspense>
     )
     
 }
