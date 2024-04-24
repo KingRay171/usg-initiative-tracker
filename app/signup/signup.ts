@@ -12,7 +12,6 @@ interface ActionResult {
 
 export default async function signup(formData: FormData): Promise<ActionResult> {
 	const body = formData.entries()
-    console.log(body);
     const name = body.next().value[1]
     const email = body.next().value[1]
     const password = body.next().value[1]

@@ -8,25 +8,14 @@ interface ActionResult {
 	error: string;
 }
 
-
 export default async function login(formData: FormData): Promise<ActionResult> {
-	console.log("called")
 	const email = formData.get("email")?.toString();
-	if (
-		typeof email !== "string"
-	) {
-		console.log(typeof email)
-		return {
-			error: "Invalid username"
-		};
-		
+	if (typeof email !== "string") {
+		return {error: "Invalid username"};	
 	}
 	const password = formData.get("password")?.toString();
 	if (typeof password !== "string") {
-		console.log("email")
-		return {
-			error: "Invalid password"
-		};
+		return {error: "Invalid password"};
 	}
 
 	const existingUser = await getUserFromEmail(email)
@@ -40,15 +29,11 @@ export default async function login(formData: FormData): Promise<ActionResult> {
 		// Since protecting against this is none-trivial,
 		// it is crucial your implementation is protected against brute-force attacks with login throttling etc.
 		// If usernames are public, you may outright tell the user that the username is invalid.
-		return {
-			error: "Incorrect username or password"
-		};
+		return {error: "Incorrect username or password"};
 	}
 
 	if (existingUser.password !== password) {
-		return {
-			error: "Incorrect username or password"
-		};
+		return {error: "Incorrect username or password"};
 	}
 
 	const session = await lucia.createSession(String(existingUser.id), {});

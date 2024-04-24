@@ -1,8 +1,9 @@
+import { deleteInit } from "@/app/queries";
 import prisma from "@/lib/prisma";
 import { Status } from "@prisma/client";
 
 export async function DELETE(request: Request, context: any){
-    await prisma.init.delete({where: {id: context.params.id}})
+    await deleteInit(context.params.id)
     return new Response("Success", {status: 200})
 }
 

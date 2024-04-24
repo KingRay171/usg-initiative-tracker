@@ -5,17 +5,8 @@ import NavRight from "./navright";
 import NavBurger from "./navburger";
 import SignedOut from "./signedout";
 import { Suspense } from "react";
-import { User } from "lucia";
 import SignedIn from "./signedin";
-import { Session } from "lucia";
-
-export type UnvalidatedSession = {
-  user: User;
-  session: Session;
-} | {
-  user: null;
-  session: null;
-}
+import { UnknownSession } from "@/new-types";
 
 export default async function Nav() {
   const routes = [
@@ -27,7 +18,7 @@ export default async function Nav() {
     {route: "/comms", name: "Communications"}
   ]
   
-  const handleAuth = async (session: UnvalidatedSession) => {
+  const handleAuth = async (session: UnknownSession) => {
     
     if(session.session){
       return <SignedIn params={{name: session.user.name}} />

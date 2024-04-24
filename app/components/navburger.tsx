@@ -29,7 +29,7 @@ export default function NavBurger({routes}: {routes: {route: string, name: strin
         overflow-y-auto overscroll-y-none transition duration-500 
         peer-checked:translate-x-0">
           <div className="float-right min-h-full w-[85%] bg-white dark:bg-slate-800 px-6 pt-24 shadow-2xl">
-              <menu className="
+            <menu className="
             flex flex-col text-lg text-black dark:text-white space-y-4 
             [&_.active]:underline [&>*:hover]:text-white"
             >
@@ -42,6 +42,5 @@ export default function NavBurger({routes}: {routes: {route: string, name: strin
           </div>
         </div>
       </label>
-        
     )
 }

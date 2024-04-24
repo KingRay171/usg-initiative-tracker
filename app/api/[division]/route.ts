@@ -1,9 +1,9 @@
+import { getAllDivisionInits } from '@/app/queries';
 import prisma from '@/lib/prisma';
 import { InitType, Status } from '@prisma/client';
 
 export async function GET(request: Request, context: any) {
-  const allInits = await prisma.init.findMany({where: {type: InitType[context.toUpperCase() as keyof typeof InitType]}})
-  return Response.json(allInits);
+  return Response.json(await getAllDivisionInits(context.toUpperCase()));
 }
 
 export async function POST(request: Request, context: any) {

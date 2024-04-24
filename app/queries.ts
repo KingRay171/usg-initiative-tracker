@@ -1,6 +1,11 @@
 import prisma from "@/lib/prisma"
 import { InitType } from "@prisma/client";
 import "server-only";
+import { user } from "@prisma/client";
+
+export const getAllDivisionInits = async (div: string) => {
+    return await prisma.init.findMany({where: {type: InitType[div as keyof typeof InitType]}})
+}
 
 export const getInitsForHome = async () => {
     return await prisma.init.findMany({take: 5, orderBy: {createdAt: "desc"}, select: {id: true, name: true, type: true}})
@@ -28,4 +33,8 @@ export const getUserFromName = async (name: string) => {
 
 export const createUser = async (id: string, name: string, email: string, password: string, admin: boolean) => {
     return await prisma.user.create({data: {id, name, email, password, admin}})
+}
+
+export const deleteInit = async (id: string) => {
+    return await prisma.init.delete({where: {id}})
 }

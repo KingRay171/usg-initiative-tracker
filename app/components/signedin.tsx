@@ -5,12 +5,6 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation"
 import { User, Session } from 'lucia';
 
-export type validatedRequest = {
-        user: User;
-        session: Session;
-}
-
-
 async function logOut() {
     'use server';
     const { session } = await validateRequest();
