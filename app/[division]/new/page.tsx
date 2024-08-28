@@ -14,7 +14,7 @@ export default async function Home({params}:{params: {division: string}}) {
           <p>Create an Initiative</p>
           <Suspense>
           <InitForm leaders={await getAllLeaders()} />
-          <Link href={`${params.division}`}>Back</Link>
+          <Link href={`/${params.division}`}>Back</Link>
           </Suspense>
         </div>
       </main>
