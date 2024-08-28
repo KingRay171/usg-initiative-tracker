@@ -15,12 +15,12 @@ export async function POST(request: Request, context: any) {
   body.splice(0, 2)
   body.splice(body.length - 1, 1)
   let leaders = body.map((e) => {return {id: (e[1] as string).split(":")[1].split(")")[0]}})
-  
+
   await prisma.init.create({
     data: {
       name: name, 
       description: desc,
-      type: InitType[context.toUpperCase() as keyof typeof InitType],
+      type: InitType[context.params.division.toUpperCase() as keyof typeof InitType],
       leaders: {
         connect: leaders
       },
