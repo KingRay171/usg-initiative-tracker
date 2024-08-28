@@ -14,8 +14,8 @@ export default function EditDelete({init, leaders}: {init: InitWithLeaders, lead
     const router = useRouter()
     const pathName = usePathname()
     const init_type = pathName.split("/")[1]
-    const initLeaderNames = init.leaders.map((leader) => {return {...leader, value: leader.name, label: leader.name }})
-    const allLeaderNames = leaders.map((leader) => {return {...leader, value: leader.name, label: leader.name }})
+    const initLeaderNames = init.leaders.map((leader) => {return {...leader, value: `${leader.name} (id:${leader.id})`, label: `${leader.name} (id:${leader.id})` }})
+    const allLeaderNames = leaders.map((leader) => {return {...leader, value: `${leader.name} (id:${leader.id})`, label: `${leader.name} (id:${leader.id})` }})
     const [inputFields, setInputFields] = useState(initLeaderNames)
     const statusOptions = [
         {label: "Planning", value: "PLANNING"}, 
