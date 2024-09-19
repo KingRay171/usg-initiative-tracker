@@ -6,7 +6,6 @@ import { Suspense } from "react";
 import { UnknownSession } from "@/new-types";
 
 const handleInitExists = async ({params}:{params: {division: string, id: string}}, divisionEnum: InitType, session: UnknownSession) => {
-    
     const init = await getInitFromId(params.id)
     if(!init || init.type !== divisionEnum) return (
         <>
@@ -34,7 +33,7 @@ const handleInitExists = async ({params}:{params: {division: string, id: string}
               ))}
           </div>
               
-          {session.session && <EditDelete init={init} leaders={leaders} />}
+          {session.user?.admin && <EditDelete init={init} leaders={leaders} />}
           </div>
           </div>
       )
